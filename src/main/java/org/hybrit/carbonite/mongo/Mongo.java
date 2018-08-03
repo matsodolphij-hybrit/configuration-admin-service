@@ -6,9 +6,7 @@ import com.mongodb.MongoException;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,7 +19,7 @@ public enum Mongo {
     INSTANCE;
     final static String USER = "mule";     // the user name
     final static String DBNAME = "carbonite";
-    final static String SOURCE = "localhost";   // the source where the user is defined
+    final static String SOURCE = "minddev";   // the source where the user is defined
     final char[] PASSWORD = "Uhv8XDx4pYf7fTLS".toCharArray(); // the password as a character array
     private MongoClient mongoClient;
 
@@ -42,16 +40,13 @@ public enum Mongo {
                         .build());
     }
 
-    public int getCountInCollection(final String collectionName, final String key, final String value) {
+    public int getCountInCollection(final String collectionName) {
         try {
             final MongoDatabase mongoDatabase = mongoClient.getDatabase(DBNAME);
             System.out.println(mongoDatabase.getName());
-            final Document query = new Document();
-            query.put(key, value);
-            MongoCollection<Document> collection = mongoDatabase.getCollection(collectionName);
-            return ((int) collection.countDocuments(query));
+            return ((int) mongoDatabase.getCollection(collectionName).countDocuments());
         } catch (final MongoException e) {
-            System.out.println("An error has occured with counting the documents in collection: " + collectionName);
+            System.out.println("An error has occured with counting the documents in collection: " + collectionName + " the error" + e.getMessage());
             return 0;
         }
     }

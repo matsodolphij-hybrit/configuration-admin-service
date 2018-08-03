@@ -9,7 +9,7 @@ public class DemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
-		int count = Mongo.INSTANCE.getCountInCollection("assets", "","");
+		int count = Mongo.INSTANCE.getCountInCollection("assets");
 		System.out.println("the count from the main " + count);
 }
 }
